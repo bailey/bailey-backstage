@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: yarn build
         run: |
-          yarn install --frozen-lockfile
+          yarn install
           yarn tsc
           yarn build:backend --config app-config.yaml
       - name: image build
