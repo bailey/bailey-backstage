@@ -1,0 +1,24 @@
+name: Deploy pages
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: yarn build
+        run: |
+          yarn install --frozen-lockfile
+          yarn tsc
+          yarn build:backend --config app-config.yaml
+      - name: image build
+        run: |
+          docker image build . -f packages/backend/Dockerfile --tag backstage
+      - name: deploy on github pages              # Use a third-party plugin to upload the content
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: build
