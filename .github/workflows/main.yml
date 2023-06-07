@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: yarn build
         run: |
+          cd ..
           yarn install
           yarn tsc
           yarn build:backend --config app-config.yaml
